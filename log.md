@@ -21,6 +21,9 @@ Test Version 1.0.1
     - Highlight the text that is being read
     - Allows give text as input [Error - throws error while processing text]
 
+Test Version 1.0.2
+    
+    - User will be able input text mannually and the processes the text
 
 To be included:
 
@@ -28,7 +31,6 @@ To be included:
     - Add voice commands for choosing input type
     - Convert to google text to speech api [webkitVoiceRecognition is used, but ggt is the one given in ppt]
     - should allow to upload documents using voice commands [which is not working in test version 1.0.0]
-
 
 Completed:
 

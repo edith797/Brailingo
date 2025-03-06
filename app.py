@@ -99,14 +99,14 @@ def process_document():
 
 @app.route('/process-text', methods=['POST'])
 def process_text():
-    print("hello world")
-    text = request.form.get('text')
-    if not text:
+    text = request.get_json()
+    data = text.get('text')
+    if not data:
         return jsonify({'error': 'No text provided'}), 400
 
-    braille_text = BrailleConverter().text_to_braille(text)
+    braille_text = BrailleConverter().text_to_braille(data)
     return jsonify({
-        'text': text,
+        'text': data,
         'braille': braille_text,
         'success': True
     })

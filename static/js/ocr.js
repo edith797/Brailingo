@@ -50,7 +50,6 @@ class DocumentProcessor {
                     body: formData
                 });
             } else {
-                console.log("cp 1");
                 response = await fetch('/process-text', {
                     method: 'POST',
                     headers: {
