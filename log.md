@@ -15,9 +15,21 @@ Test version 1.0.0
         - "show braille" - Show braille output
         - "help" - Show this help menu
 
+
 Test Version 1.0.1
 
-    To be included
-        - Get text as input
-        - Inputed text & extracted text->  Convert to braille -> Print the braille
-        - should allow to upload documents using voice commands [which is not working in test version 1.0.0]
+    - Highlight the text that is being read
+    - Allows give text as input [Error - throws error while processing text]
+
+
+To be included:
+
+    - Inputed text & extracted text ->  Convert to braille -> Print the braille
+    - Add voice commands for choosing input type
+    - Convert to google text to speech api [webkitVoiceRecognition is used, but ggt is the one given in ppt]
+    - should allow to upload documents using voice commands [which is not working in test version 1.0.0]
+
+
+Completed:
+
+    - ~Get text as input~
