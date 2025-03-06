@@ -1,44 +1,37 @@
 /* Accessibility-focused styles */
 :root {
-    --primary-color:rgb(94, 107, 121);
-    --secondary-color: #34495e;
-    --text-color: #dddddd;
-    --background-color: #000029;
-    --focus-color: #3498db;
+    --primary-color: #F1D93D;
+    --secondary-color: #231F20;
+    --box-border: solid 3px #000000;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
+    /* line-height: 6; */
+}
+
+header {
+    height: 10rem;
+    background-color: var(--secondary-color);
+    /* display: flex; */
+    align-items: center;
+}
+
+header a {
+    color: white;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
 /* High contrast focus styles */
 *:focus {
     outline: 3px solid var(--focus-color);
-    outline-offset: 2px;
-}
-
-/* Skip link for keyboard navigation */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--focus-color);
-    color: white;
-    padding: 8px;
-    z-index: 100;
-    transition: top 0.3s;
-}
-
-.skip-link:focus {
-    top: 0;
+    outline-offset: 4px;
 }
 
 /* Large, readable text */
 body {
-    font-size: 18px;
+    font-size: 28px;
 }
 
 h1 {
@@ -49,14 +42,24 @@ h1 {
 
 /* Buttons with good contrast */
 .btn {
+    background-color: var(--secondary-color);
+    color: white;
     font-size: 1.1rem;
     padding: 0.75rem 1.5rem;
     margin: 0.5rem;
     border-radius: 8px;
 }
 
+.voice-btn {
+    height: 5rem;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
 /* File upload section */
-.file-upload-section {
+.file-upload-section,
+.text-input-section {
+    color: #000000;
     background: white;
     padding: 2rem;
     border-radius: 12px;
@@ -64,14 +67,23 @@ h1 {
     margin-bottom: 2rem;
 }
 
+.text-input-field {
+    background: rgb(233, 233, 0);
+    border: solid 3px #000000;
+    border-radius: 0;
+}
+
+.text-input-field::placeholder {
+    color: black;
+}
+
 /* Extracted text display */
 .extracted-text {
     float: left;
     color: black;
-    border: none;
     background: white;
+    border: var(--box-border);
     padding: 1.5rem;
-    border-radius: 8px;
     min-height: 200px;
     width: 50%;
     margin-top: 1rem;
@@ -87,9 +99,11 @@ h1 {
 
 .braille-text {
     float: right;
-    background: black;
-    border: none;
-    color: white;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: var(--box-border);
+    padding: 1.5rem;
+    border-left: none;
     margin-top: 1rem;
     min-height: 200px;
     width: 50%;

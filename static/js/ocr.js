@@ -8,6 +8,7 @@ class DocumentProcessor {
         this.outputControls = document.querySelector('.output-controls');
         this.extractedText = document.querySelector('#extractedText .text-content');
         this.brailleText = document.querySelector('#brailleText .braille-content');
+        this.printBraille = document.getElementsByClassName('print-braille');
 
         this.initializeEventListeners();
     }
@@ -16,6 +17,7 @@ class DocumentProcessor {
         this.uploadForm.addEventListener('submit', (e) => this.handleSubmit(e));
         this.textForm.addEventListener('submit', (e) => this.handleSubmit(e));
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+        this.printBraille[0].addEventListener('click', () => this.printBrailleText());
     }
 
     handleFileSelect(event) {
@@ -63,6 +65,7 @@ class DocumentProcessor {
 
             if (response.ok) {
                 this.displayResults(data.text, data.braille);
+                this.printBraille[0].style.display = 'block';
                 this.provideFeedback('success');
             } else {
                 this.showError(data.error || 'Error processing document');
@@ -120,6 +123,50 @@ class DocumentProcessor {
 
         document.body.appendChild(announcement);
         setTimeout(() => announcement.remove(), 1000);
+    }
+
+    printBrailleText() {
+        // Get the braille content
+        const brailleContent = this.brailleText.textContent;
+        
+        if (!brailleContent) {
+            this.showError('No braille text available to print');
+            return;
+        }
+
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+        
+        // Create the HTML content for printing
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Braille Text</title>
+                    <style>
+                        body {
+                            font-family: monospace;
+                            padding: 20px;
+                            white-space: pre-wrap;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${brailleContent}
+                </body>
+            </html>
+        `);
+        
+        printWindow.document.close();
+        
+        // Wait for content to load before printing
+        printWindow.onload = function() {
+            printWindow.print();
+            printWindow.onafterprint = function() {
+                printWindow.close();
+            };
+        };
+
+        this.announceToScreenReader('Printing braille text');
     }
 
     provideFeedback(type) {

@@ -5,20 +5,20 @@ class SpeechController {
         this.utterance = null;
         this.isListening = false;
         this.responseType = null; // 'speech' or 'tactile'
+        this.inputType = null; //'text' or 'file'
 
         setTimeout(() => {
             this.setUpPage();
             this.playWelcomeMessage();
             this.initializeVoiceCommands();
             this.initializeButtons();
-        }, 1000);
+        }, 100);
     }
 
     playWelcomeMessage() {
         const welcomeMessage = "Welcome to the Brailingo. Please choose your preferred feedback method: Speech or Tactile. For voice commands, say 'use speech' or 'use tactile' to make your selection.";
-
         this.speak(welcomeMessage);
-        // this.provideTactileFeedback([200, 100, 200, 100, 200]); // Welcome pattern
+        // this.provideTactileFeedback([200, 100, 200, 100, 200]);
 
         setTimeout(() => {
             this.toggleVoiceRecognition();
@@ -32,7 +32,6 @@ class SpeechController {
     }
 
     speak(text) {
-        console.log(text);
         this.synthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         this.synthesis.speak(utterance);
@@ -56,23 +55,24 @@ class SpeechController {
         } else {
             document.querySelector('.file-upload-section').style.display = 'none';
             document.querySelector('.text-input-section').style.display = 'block';
-        } 
+        }
+        
+        if (type === 'speech') {
+            // 
+            document.querySelector('.output-controls').style.display = 'block';
+        } else {
+            this.provideTactileFeedback([200, 100, 200]);
+        }
     }
     
     setResponseType(type) {
         this.responseType = type;
         document.getElementById('responseTypeSection').style.display = 'none';
         document.getElementById('inputTypeSection').style.display = 'block';
-        // document.querySelector('.file-upload-section').style.display = 'block';
 
         const message = `${type === 'speech' ? 'Speech' : 'Tactile'} output selected. You can now upload a document or use voice commands to navigate.`;
 
-        if (type === 'speech') {
-            this.speak(message);
-            document.querySelector('.output-controls').style.display = 'block';
-        } else {
-            this.provideTactileFeedback([200, 100, 200]);
-        }
+        this.speak(message);
 
         this.updateStatus(message, 'success');
     }
@@ -88,10 +88,11 @@ class SpeechController {
                 this.processCommand(command);
             };
 
-            // this.recognition.onerror = (event) => {
-            //     console.error('Speech recognition error:', event.error);
-            //     this.updateStatus('Error in voice recognition. Please try again.', 'error');
-            // };
+            this.recognition.onerror = (event) => {
+                if (event.error === 'no-speech') return; // Ignore no-speech errors
+                console.log('Speech recognition error:', event.error);
+                this.updateStatus('Error in voice recognition. Please try again.', 'error');
+            };
 
             this.recognition.onend = () => {
                 if (this.isListening) {
@@ -112,18 +113,31 @@ class SpeechController {
             document.getElementById('fileInput').click();
         } else if (command.includes('process') || command.includes('start')) {
             document.getElementById('uploadForm').dispatchEvent(new Event('submit'));
+        } else if (command.includes('input text')) {
+            this.setInputType('text');
+        } else if (command.includes('input file')) {
+            this.setInputType('file');
         } else if (command.includes('read text')) {
             this.readText();
         } else if (command.includes('pause')) {
             this.pauseReading();
         } else if (command.includes('resume')) {
             this.readText();
-        }else if (command.includes('stop')) {
+        } else if (command.includes('stop')) {
             this.stopReading();
         } else if (command.includes('show braille')) {
             document.getElementById('brailleText').scrollIntoView({ behavior: 'smooth' });
         } else if (command.includes('help')) {
             new bootstrap.Modal(document.getElementById('voiceCommandsHelp')).show();
+        } 
+        else if (command.includes('close')) {
+            const helpModal = bootstrap.Modal.getInstance(document.getElementById('voiceCommandsHelp'));
+            if (helpModal) {
+                helpModal.hide();
+            }
+        } 
+        else {
+            console.log("Unknown command:", command);
         }
     }
 

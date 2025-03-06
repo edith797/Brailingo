@@ -12,8 +12,8 @@
     
     <!-- Voice Commands Section - Always Visible -->
     <div class="voice-controls mb-4">
-        <button id="startVoice" class="btn btn-primary btn-lg" aria-label="Start voice commands">
-            <i data-feather="mic"></i> Start Voice Commands
+        <button id="startVoice" class="btn voice-btn btn-prim btn-lg" aria-label="Start voice commands">
+            <i data-feather="mic"></i>
         </button>
         <div id="voiceStatus" class="alert mt-2" role="status" style="display: none;"></div>
     </div>
@@ -21,7 +21,7 @@
     <div id="responseTypeSection" class="response-type-section mb-4">
         <h2 class="h4 mb-3 text-center">Choose Your Preferred Response Type</h2>
         <div class="d-flex justify-content-center gap-3">
-            <button id="speechOption" class="btn btn-lg btn-primary response-type-btn" aria-label="Choose speech output">
+            <button id="speechOption" class="btn btn-lg btn-prim response-type-btn" aria-label="Choose speech output">
                 <i data-feather="volume-2"></i> Speech Output
             </button>
             <button id="tactileOption" class="btn btn-lg btn-secondary response-type-btn" aria-label="Choose tactile feedback">
@@ -35,10 +35,10 @@
     <div id="inputTypeSection" class="input-type-section mb-4" style="display: none;">
         <h2 class="h4 mb-3 text-center">Select input format</h2>
         <div class="d-flex justify-content-center gap-3">
-            <button id="textOption" class="btn btn-lg btn-primary response-type-btn" aria-label="Choose speech output">
+            <button id="textOption" class="btn btn-lg btn-prim response-type-btn" aria-label="Choose speech output">
                 <i data-feather="type"></i> Text
             </button>
-            <button id="fileOption" class="btn btn-lg btn-primary response-type-btn" aria-label="Choose tactile feedback">
+            <button id="fileOption" class="btn btn-lg btn-prim response-type-btn" aria-label="Choose tactile feedback">
                 <i data-feather="file"></i> Image or PDF
             </button>
         </div>
@@ -59,12 +59,14 @@
         <form id="textForm" class="mb-4">
             <div class="mb-3">
                 <label for="textInput" class="form-label">Enter Text</label>
-                <textarea class="form-control form-control-lg" id="textInput" rows="5" placeholder="Type or paste your text here..." aria-describedby="textHelp"></textarea>
+                <textarea class="text-input-field form-control form-control-lg" id="textInput" rows="5" placeholder="Type or paste your text here..." aria-describedby="textHelp"></textarea>
                 <div id="textHelp" class="form-text">Enter the text you want to convert to braille or have read aloud</div>
             </div>
             <button type="submit" class="btn btn-success btn-lg">Process Text</button>
         </form>
     </div>
+
+    <button class="btn btn-success btn-lg print-braille" style="display: none;">Print Braille</button>
 
     <!-- Output Section -->
     <div class="output-section">
@@ -75,7 +77,7 @@
         </div>
 
         <div class="output-controls mb-3" style="display: none;">
-            <button id="playText" class="btn btn-primary" aria-label="Read text aloud">
+            <button id="playText" class="btn btn-prim" aria-label="Read text aloud">
                 <i data-feather="volume-2"></i> Read Aloud
             </button>
             <button id="pauseText" class="btn btn-secondary" aria-label="Pause reading">
@@ -87,7 +89,7 @@
         </div>
 
         <!-- Text Output -->
-        <div id="extractedText" class="extracted-text p-3 border rounded mt-3" role="region" aria-label="Extracted text content">
+        <div id="extractedText" class="extracted-text p-3 mt-3" role="region" aria-label="Extracted text content" >
             <h3>Extracted Text</h3>
             <div class="text-container">
                 <span id="textContainer" class="text-content"></span>
@@ -96,7 +98,7 @@
         </div>
 
         <!-- Braille Output -->
-        <div id="brailleText" class="braille-text p-3 border rounded mt-3" role="region" aria-label="Braille representation">
+        <div id="brailleText" class="braille-text p-3  mt-3" role="region" aria-label="Braille representation">
             <h3>Braille Output</h3>
             <div class="braille-content"></div>
         </div>
