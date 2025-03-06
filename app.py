@@ -6,11 +6,7 @@ import pytesseract
 from PIL import Image
 import io
 from PyPDF2 import PdfReader
-<<<<<<< HEAD
-
-=======
 from utils.braille_converter import BrailleConverter
->>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -42,24 +38,6 @@ def extract_text_from_pdf(pdf_file):
         logger.error(f"Error extracting text from PDF: {str(e)}")
         return ""
 
-<<<<<<< HEAD
-def text_to_braille(text):
-    """Convert text to Braille Unicode characters"""
-    # Basic English to Braille mapping
-    braille_dict = {
-        'a': '⠁', 'b': '⠃', 'c': '⠉', 'd': '⠙', 'e': '⠑',
-        'f': '⠋', 'g': '⠛', 'h': '⠓', 'i': '⠊', 'j': '⠚',
-        'k': '⠅', 'l': '⠇', 'm': '⠍', 'n': '⠝', 'o': '⠕',
-        'p': '⠏', 'q': '⠟', 'r': '⠗', 's': '⠎', 't': '⠞',
-        'u': '⠥', 'v': '⠧', 'w': '⠺', 'x': '⠭', 'y': '⠽',
-        'z': '⠵', ' ': '⠀', '.': '⠲', ',': '⠂', '!': '⠖',
-        '?': '⠦', '"': '⠐', "'": '⠄', '-': '⠤', 
-        '0': '⠴', '1': '⠂', '2': '⠆', '3': '⠒', '4': '⠲',
-        '5': '⠢', '6': '⠖', '7': '⠶', '8': '⠦', '9': '⠔'
-    }
-
-    return ''.join(braille_dict.get(c.lower(), c) for c in text)
-=======
 # def text_to_braille(text):
 #     """Convert text to Braille Unicode characters"""
 #     # Basic English to Braille mapping
@@ -76,7 +54,6 @@ def text_to_braille(text):
 #     }
 
 #     return ''.join(braille_dict.get(c.lower(), c) for c in text)
->>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
 
 @app.route('/')
 def index():
@@ -106,11 +83,7 @@ def process_document():
                 return jsonify({'error': 'No text could be extracted from the document'}), 400
 
             # Convert text to braille
-<<<<<<< HEAD
-            braille_text = text_to_braille(text)
-=======
             braille_text = BrailleConverter().text_to_braille(text)
->>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
 
             return jsonify({
                 'text': text,
@@ -124,8 +97,6 @@ def process_document():
 
     return jsonify({'error': 'Invalid file type'}), 400
 
-<<<<<<< HEAD
-=======
 @app.route('/process-text', methods=['POST'])
 def process_text():
     print("hello world")
@@ -140,6 +111,5 @@ def process_text():
         'success': True
     })
 
->>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
