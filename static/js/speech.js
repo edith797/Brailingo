@@ -42,13 +42,22 @@ class SpeechController {
         document.getElementById('startVoice').addEventListener('click', () => this.toggleVoiceRecognition());
         document.getElementById('speechOption').addEventListener('click', () => this.setResponseType('speech'));
         document.getElementById('tactileOption').addEventListener('click', () => this.setResponseType('tactile'));
+<<<<<<< HEAD
+=======
         document.getElementById('textOption').addEventListener('click', () => this.setInputType('text'));
         document.getElementById('fileOption').addEventListener('click', () => this.setInputType('file'));
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         document.getElementById('playText').addEventListener('click', () => this.readText());
         document.getElementById('pauseText').addEventListener('click', () => this.pauseReading());
         document.getElementById('stopText').addEventListener('click', () => this.stopReading());
     }
 
+<<<<<<< HEAD
+    setResponseType(type) {
+        this.responseType = type;
+        document.getElementById('responseTypeSection').style.display = 'none';
+        document.querySelector('.file-upload-section').style.display = 'block';
+=======
     setInputType(type) {
         if (type === 'file') {
             document.querySelector('.file-upload-section').style.display = 'block';
@@ -64,6 +73,7 @@ class SpeechController {
         document.getElementById('responseTypeSection').style.display = 'none';
         document.getElementById('inputTypeSection').style.display = 'block';
         // document.querySelector('.file-upload-section').style.display = 'block';
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
 
         const message = `${type === 'speech' ? 'Speech' : 'Tactile'} output selected. You can now upload a document or use voice commands to navigate.`;
 
@@ -116,9 +126,13 @@ class SpeechController {
             this.readText();
         } else if (command.includes('pause')) {
             this.pauseReading();
+<<<<<<< HEAD
+        } else if (command.includes('stop')) {
+=======
         } else if (command.includes('resume')) {
             this.readText();
         }else if (command.includes('stop')) {
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
             this.stopReading();
         } else if (command.includes('show braille')) {
             document.getElementById('brailleText').scrollIntoView({ behavior: 'smooth' });
@@ -144,6 +158,15 @@ class SpeechController {
         }
     }
 
+<<<<<<< HEAD
+    readText() {
+        const textElement = document.querySelector('#extractedText .text-content');
+        const text = textElement.textContent;
+
+        if (text && text.trim()) {
+            this.utterance = new SpeechSynthesisUtterance(text);
+            this.synthesis.speak(this.utterance);
+=======
     hightlightWords(word, index) {
         const textElement = document.getElementById('textContainer');
         const words = textElement.getElementsByTagName('span');
@@ -204,6 +227,7 @@ class SpeechController {
             } else {
                 this.synthesis.speak(this.utterance);
             }
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         }
     }
 
