@@ -150,10 +150,14 @@ class SpeechController {
         if (this.isListening) {
             this.recognition.stop();
             this.isListening = false;
+            document.getElementById('startVoice').classList.remove('btn-sec');
+            document.getElementById('startVoice').classList.add('btn-prim');
             this.updateStatus('Voice commands stopped', 'info');
         } else {
             this.recognition.start();
             this.isListening = true;
+            document.getElementById('startVoice').classList.remove('btn-prim');
+            document.getElementById('startVoice').classList.add('btn-sec');
             this.updateStatus('Listening for voice commands...', 'success');
         }
     }
@@ -242,7 +246,7 @@ class SpeechController {
     updateStatus(message, type) {
         const statusElement = document.getElementById('voiceStatus');
         statusElement.textContent = message;
-        statusElement.className = `alert alert-${type}`;
+        statusElement.className = `error`;
         statusElement.style.display = 'block';
 
         if (this.responseType === 'tactile') {

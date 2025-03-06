@@ -46,7 +46,8 @@ Test Version 1.0.3
 To be included:
 
     - should allow to upload documents using voice commands [which is not working in test version 1.0.0]
-    - Ch
+    - Add text to Tactile feedback
+    - To add some speech
 
 Completed:
 

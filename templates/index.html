@@ -12,19 +12,19 @@
     
     <!-- Voice Commands Section - Always Visible -->
     <div class="voice-controls mb-4">
-        <button id="startVoice" class="btn voice-btn btn-prim btn-lg" aria-label="Start voice commands">
+        <button id="startVoice" class="btn voice-btn btn-sec btn-lg" aria-label="Start voice commands">
             <i data-feather="mic"></i>
         </button>
-        <div id="voiceStatus" class="alert mt-2" role="status" style="display: none;"></div>
+        <div id="voiceStatus" class="message" role="status" style="display: none;"></div>
     </div>
     <!-- Response Type Selection Section -->
     <div id="responseTypeSection" class="response-type-section mb-4">
-        <h2 class="h4 mb-3 text-center">Choose Your Preferred Response Type</h2>
+        <h2 class="h2 mb-3 text-center">Choose Your Preferred Response Type</h2>
         <div class="d-flex justify-content-center gap-3">
             <button id="speechOption" class="btn btn-lg btn-prim response-type-btn" aria-label="Choose speech output">
                 <i data-feather="volume-2"></i> Speech Output
             </button>
-            <button id="tactileOption" class="btn btn-lg btn-secondary response-type-btn" aria-label="Choose tactile feedback">
+            <button id="tactileOption" class="btn btn-lg btn-sec response-type-btn" aria-label="Choose tactile feedback">
                 <i data-feather="smartphone"></i> Tactile Feedback
             </button>
         </div>
@@ -33,12 +33,12 @@
 
 
     <div id="inputTypeSection" class="input-type-section mb-4" style="display: none;">
-        <h2 class="h4 mb-3 text-center">Select input format</h2>
+        <h2 class="h2 mb-3 text-center">Select input format</h2>
         <div class="d-flex justify-content-center gap-3">
             <button id="textOption" class="btn btn-lg btn-prim response-type-btn" aria-label="Choose speech output">
                 <i data-feather="type"></i> Text
             </button>
-            <button id="fileOption" class="btn btn-lg btn-prim response-type-btn" aria-label="Choose tactile feedback">
+            <button id="fileOption" class="btn btn-lg btn-sec response-type-btn" aria-label="Choose tactile feedback">
                 <i data-feather="file"></i> Image or PDF
             </button>
         </div>
@@ -51,7 +51,7 @@
                 <input type="file" class="form-control form-control-lg" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" aria-describedby="fileHelp">
                 <div id="fileHelp" class="form-text">Supported formats: PDF, PNG, JPG</div>
             </div>
-            <button type="submit" class="btn btn-success btn-lg">Process Document</button>
+            <button type="submit" class="btn">Process Document</button>
         </form>
     </div>
 
@@ -80,7 +80,7 @@
             <button id="playText" class="btn btn-prim" aria-label="Read text aloud">
                 <i data-feather="volume-2"></i> Read Aloud
             </button>
-            <button id="pauseText" class="btn btn-secondary" aria-label="Pause reading">
+            <button id="pauseText" class="btn btn-sec" aria-label="Pause reading">
                 <i data-feather="pause"></i> Pause
             </button>
             <button id="stopText" class="btn btn-danger" aria-label="Stop reading">
