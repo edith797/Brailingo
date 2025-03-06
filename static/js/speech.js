@@ -42,15 +42,28 @@ class SpeechController {
         document.getElementById('startVoice').addEventListener('click', () => this.toggleVoiceRecognition());
         document.getElementById('speechOption').addEventListener('click', () => this.setResponseType('speech'));
         document.getElementById('tactileOption').addEventListener('click', () => this.setResponseType('tactile'));
+        document.getElementById('textOption').addEventListener('click', () => this.setInputType('text'));
+        document.getElementById('fileOption').addEventListener('click', () => this.setInputType('file'));
         document.getElementById('playText').addEventListener('click', () => this.readText());
         document.getElementById('pauseText').addEventListener('click', () => this.pauseReading());
         document.getElementById('stopText').addEventListener('click', () => this.stopReading());
     }
 
+    setInputType(type) {
+        if (type === 'file') {
+            document.querySelector('.file-upload-section').style.display = 'block';
+            document.querySelector('.text-input-section').style.display = 'none';
+        } else {
+            document.querySelector('.file-upload-section').style.display = 'none';
+            document.querySelector('.text-input-section').style.display = 'block';
+        } 
+    }
+    
     setResponseType(type) {
         this.responseType = type;
         document.getElementById('responseTypeSection').style.display = 'none';
-        document.querySelector('.file-upload-section').style.display = 'block';
+        document.getElementById('inputTypeSection').style.display = 'block';
+        // document.querySelector('.file-upload-section').style.display = 'block';
 
         const message = `${type === 'speech' ? 'Speech' : 'Tactile'} output selected. You can now upload a document or use voice commands to navigate.`;
 
@@ -103,7 +116,9 @@ class SpeechController {
             this.readText();
         } else if (command.includes('pause')) {
             this.pauseReading();
-        } else if (command.includes('stop')) {
+        } else if (command.includes('resume')) {
+            this.readText();
+        }else if (command.includes('stop')) {
             this.stopReading();
         } else if (command.includes('show braille')) {
             document.getElementById('brailleText').scrollIntoView({ behavior: 'smooth' });
@@ -129,13 +144,66 @@ class SpeechController {
         }
     }
 
-    readText() {
-        const textElement = document.querySelector('#extractedText .text-content');
-        const text = textElement.textContent;
+    hightlightWords(word, index) {
+        const textElement = document.getElementById('textContainer');
+        const words = textElement.getElementsByTagName('span');
 
+        Array.from(words).forEach(span => {
+            span.classList.remove('text-highlighted');
+        })
+
+        if (words[index]) {
+            words[index].classList.add('text-highlighted');
+        }
+    }
+
+    prepareTextForReading(text) {
+        const textContainer = document.getElementById('textContainer');
+        const words = text.split(' ');
+        textContainer.innerHTML = words
+          .map((word, index) => {
+              return `<span data-index="${index}">${word.trim()} </span>`;
+        }
+          )
+          .join("");
+    }
+    
+    readText() {
+        console.log("Reading text...");
+        const textElement = document.getElementById('textContainer');
+        const text = textElement.textContent;
+        // console.log(text);
+        this.prepareTextForReading(text);
+        const words = text.split(" ");
+        console.log(words);
+        let currentIndex = 0;
+
+        console.log('cp 1');
         if (text && text.trim()) {
-            this.utterance = new SpeechSynthesisUtterance(text);
-            this.synthesis.speak(this.utterance);
+            if (!this.utterance || !this.synthesis.speaking) {
+                this.utterance = new SpeechSynthesisUtterance(text);
+                this.utterance.onboundary = async (event) => {
+                    if (event.name === 'word') {
+                        this.hightlightWords(words[currentIndex], currentIndex);
+                        currentIndex++;
+                    }
+                };
+
+                this.utterance.onend = () => {
+                    const textContainer = document.getElementById('textContainer');
+                    const words = textContainer.getElementsByTagName('span');
+                    Array.from(words).forEach((word) =>
+                      word.classList.remove("text-highlighted")
+                    );
+                };
+            }
+
+            console.log('cp 2');
+            if (this.synthesis.paused) {
+                this.synthesis.resume();
+            } else {
+                this.synthesis.speak(this.utterance);
+            }
         }
     }
 

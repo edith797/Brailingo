@@ -1,7 +1,9 @@
 class DocumentProcessor {
     constructor() {
-        this.form = document.getElementById('uploadForm');
+        this.uploadForm = document.getElementById('uploadForm');
+        this.textForm = document.getElementById('textForm'); // Fixed: correct ID reference
         this.fileInput = document.getElementById('fileInput');
+        this.textInput = document.getElementById('textInput');
         this.loadingIndicator = document.getElementById('loadingIndicator');
         this.outputControls = document.querySelector('.output-controls');
         this.extractedText = document.querySelector('#extractedText .text-content');
@@ -11,13 +13,15 @@ class DocumentProcessor {
     }
 
     initializeEventListeners() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.uploadForm.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.textForm.addEventListener('submit', (e) => this.handleSubmit(e));
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
     }
 
     handleFileSelect(event) {
         const file = event.target.files[0];
         if (file) {
+            this.textInput.value = ''; // Clear text input when file is selected
             this.announceToScreenReader(`Selected file: ${file.name}`);
             this.provideFeedback('file_selected');
         }
@@ -27,20 +31,34 @@ class DocumentProcessor {
         event.preventDefault();
 
         const file = this.fileInput.files[0];
-        if (!file) {
-            this.showError('Please select a file first.');
+        const text = this.textInput.value.trim();
+
+        if (!file && !text) {
+            this.showError('Please either select a file or enter text.');
             return;
         }
 
-        const formData = new FormData();
-        formData.append('file', file);
-
         try {
             this.showLoading(true);
-            const response = await fetch('/process', {
-                method: 'POST',
-                body: formData
-            });
+            let response;
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                response = await fetch('/process', {
+                    method: 'POST',
+                    body: formData
+                });
+            } else {
+                console.log("cp 1");
+                response = await fetch('/process-text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+            }
 
             const data = await response.json();
 
@@ -61,7 +79,7 @@ class DocumentProcessor {
     }
 
     displayResults(text, braille) {
-        this.extractedText.textContent = text;
+        this.extractedText.textContent = text.trim();
         this.brailleText.textContent = braille;
 
         if (window.speechController && window.speechController.responseType === 'speech') {
@@ -80,12 +98,15 @@ class DocumentProcessor {
     }
 
     showError(message) {
+        // Fixed: Use the correct form reference based on which form was submitted
+        const form = event && event.target === this.textForm ? this.textForm : this.uploadForm;
+        
         const alert = document.createElement('div');
         alert.className = 'alert alert-danger';
         alert.role = 'alert';
         alert.textContent = message;
 
-        this.form.insertAdjacentElement('beforeend', alert);
+        form.insertAdjacentElement('beforeend', alert);
         this.announceToScreenReader(`Error: ${message}`);
         this.provideFeedback('error');
 

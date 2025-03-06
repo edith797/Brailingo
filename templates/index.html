@@ -2,14 +2,21 @@
 
 {% block content %}
 <div class="accessibility-tool">
-    <h1 class="text-center mb-4">Brailingo</h1>
+    <!-- <h1 class="text-center mb-4">Brailingo</h1> -->
 
     <!-- Initial Welcome Message - Hidden but read by screen readers -->
     <div id="welcomeMessage" class="visually-hidden" aria-live="polite">
         Welcome to Brailingo. Please choose your preferred feedback method: Speech or Tactile.
         For voice commands, say "use speech" or "use tactile" to make your selection.
     </div>
-
+    
+    <!-- Voice Commands Section - Always Visible -->
+    <div class="voice-controls mb-4">
+        <button id="startVoice" class="btn btn-primary btn-lg" aria-label="Start voice commands">
+            <i data-feather="mic"></i> Start Voice Commands
+        </button>
+        <div id="voiceStatus" class="alert mt-2" role="status" style="display: none;"></div>
+    </div>
     <!-- Response Type Selection Section -->
     <div id="responseTypeSection" class="response-type-section mb-4">
         <h2 class="h4 mb-3 text-center">Choose Your Preferred Response Type</h2>
@@ -23,15 +30,20 @@
         </div>
     </div>
 
-    <!-- Voice Commands Section - Always Visible -->
-    <div class="voice-controls mb-4">
-        <button id="startVoice" class="btn btn-primary btn-lg" aria-label="Start voice commands">
-            <i data-feather="mic"></i> Start Voice Commands
-        </button>
-        <div id="voiceStatus" class="alert mt-2" role="status" style="display: none;"></div>
+
+
+    <div id="inputTypeSection" class="input-type-section mb-4" style="display: none;">
+        <h2 class="h4 mb-3 text-center">Select input format</h2>
+        <div class="d-flex justify-content-center gap-3">
+            <button id="textOption" class="btn btn-lg btn-primary response-type-btn" aria-label="Choose speech output">
+                <i data-feather="type"></i> Text
+            </button>
+            <button id="fileOption" class="btn btn-lg btn-primary response-type-btn" aria-label="Choose tactile feedback">
+                <i data-feather="file"></i> Image or PDF
+            </button>
+        </div>
     </div>
 
-    <!-- File Upload Section - Initially Hidden -->
     <div class="file-upload-section" style="display: none;">
         <form id="uploadForm" class="mb-4">
             <div class="mb-3">
@@ -40,6 +52,17 @@
                 <div id="fileHelp" class="form-text">Supported formats: PDF, PNG, JPG</div>
             </div>
             <button type="submit" class="btn btn-success btn-lg">Process Document</button>
+        </form>
+    </div>
+
+    <div class="text-input-section mb-4" id="text" role="tabpanel" aria-labelledby="text-tab" style="display: none;">
+        <form id="textForm" class="mb-4">
+            <div class="mb-3">
+                <label for="textInput" class="form-label">Enter Text</label>
+                <textarea class="form-control form-control-lg" id="textInput" rows="5" placeholder="Type or paste your text here..." aria-describedby="textHelp"></textarea>
+                <div id="textHelp" class="form-text">Enter the text you want to convert to braille or have read aloud</div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Process Text</button>
         </form>
     </div>
 
@@ -66,7 +89,10 @@
         <!-- Text Output -->
         <div id="extractedText" class="extracted-text p-3 border rounded mt-3" role="region" aria-label="Extracted text content">
             <h3>Extracted Text</h3>
-            <div class="text-content"></div>
+            <div class="text-container">
+                <span id="textContainer" class="text-content"></span>
+                <span id="text-highlight" class="text-highlighted"></span>
+            </div>
         </div>
 
         <!-- Braille Output -->

@@ -1,0 +1,23 @@
+Test version 1.0.0
+
+    - Accepts files [.png, .jpg, .jpeg, .pdf]
+    - Extracts text from images and PDFs using OCR
+    - Converts text to braille
+    - Converts text to audio
+    - Voice command to navigate through the application
+    - Voice Commands
+        - "use speech" - Select speech feedback
+        - "use tactile" - Select tactile feedback
+        - "upload file" - Open file selector
+        - "process document" - Start processing
+        - "read text" - Read extracted text
+        - "stop reading" - Stop text-to-speech
+        - "show braille" - Show braille output
+        - "help" - Show this help menu
+
+Test Version 1.0.1
+
+    To be included
+        - Get text as input
+        - Inputed text & extracted text->  Convert to braille -> Print the braille
+        - should allow to upload documents using voice commands [which is not working in test version 1.0.0]
