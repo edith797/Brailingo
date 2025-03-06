@@ -1,7 +1,14 @@
 class DocumentProcessor {
     constructor() {
+<<<<<<< HEAD
         this.form = document.getElementById('uploadForm');
         this.fileInput = document.getElementById('fileInput');
+=======
+        this.uploadForm = document.getElementById('uploadForm');
+        this.textForm = document.getElementById('textForm'); // Fixed: correct ID reference
+        this.fileInput = document.getElementById('fileInput');
+        this.textInput = document.getElementById('textInput');
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         this.loadingIndicator = document.getElementById('loadingIndicator');
         this.outputControls = document.querySelector('.output-controls');
         this.extractedText = document.querySelector('#extractedText .text-content');
@@ -11,13 +18,22 @@ class DocumentProcessor {
     }
 
     initializeEventListeners() {
+<<<<<<< HEAD
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+=======
+        this.uploadForm.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.textForm.addEventListener('submit', (e) => this.handleSubmit(e));
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
     }
 
     handleFileSelect(event) {
         const file = event.target.files[0];
         if (file) {
+<<<<<<< HEAD
+=======
+            this.textInput.value = ''; // Clear text input when file is selected
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
             this.announceToScreenReader(`Selected file: ${file.name}`);
             this.provideFeedback('file_selected');
         }
@@ -27,6 +43,7 @@ class DocumentProcessor {
         event.preventDefault();
 
         const file = this.fileInput.files[0];
+<<<<<<< HEAD
         if (!file) {
             this.showError('Please select a file first.');
             return;
@@ -41,6 +58,36 @@ class DocumentProcessor {
                 method: 'POST',
                 body: formData
             });
+=======
+        const text = this.textInput.value.trim();
+
+        if (!file && !text) {
+            this.showError('Please either select a file or enter text.');
+            return;
+        }
+
+        try {
+            this.showLoading(true);
+            let response;
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                response = await fetch('/process', {
+                    method: 'POST',
+                    body: formData
+                });
+            } else {
+                console.log("cp 1");
+                response = await fetch('/process-text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+            }
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
 
             const data = await response.json();
 
@@ -61,7 +108,11 @@ class DocumentProcessor {
     }
 
     displayResults(text, braille) {
+<<<<<<< HEAD
         this.extractedText.textContent = text;
+=======
+        this.extractedText.textContent = text.trim();
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         this.brailleText.textContent = braille;
 
         if (window.speechController && window.speechController.responseType === 'speech') {
@@ -80,12 +131,22 @@ class DocumentProcessor {
     }
 
     showError(message) {
+<<<<<<< HEAD
+=======
+        // Fixed: Use the correct form reference based on which form was submitted
+        const form = event && event.target === this.textForm ? this.textForm : this.uploadForm;
+        
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         const alert = document.createElement('div');
         alert.className = 'alert alert-danger';
         alert.role = 'alert';
         alert.textContent = message;
 
+<<<<<<< HEAD
         this.form.insertAdjacentElement('beforeend', alert);
+=======
+        form.insertAdjacentElement('beforeend', alert);
+>>>>>>> 68be6b3c0cc5ab15e1034740d877726b0e3b3306
         this.announceToScreenReader(`Error: ${message}`);
         this.provideFeedback('error');
 

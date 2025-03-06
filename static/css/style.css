@@ -80,6 +80,11 @@ h1 {
     word-wrap: break-word;
 }
 
+.text-highlighted {
+    background-color: yellow;
+    transition: background-color 0.3s ease-in-out;
+}
+
 .braille-text {
     float: right;
     background: black;
@@ -101,6 +106,10 @@ h1 {
 .voice-controls {
     text-align: center;
     margin: 2rem 0;
+}
+
+.modal-content {
+    color: #000029;
 }
 
 /* Responsive design */
