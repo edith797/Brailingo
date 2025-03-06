@@ -1,0 +1,128 @@
+/* Accessibility-focused styles */
+:root {
+    --primary-color:rgb(94, 107, 121);
+    --secondary-color: #34495e;
+    --text-color: #dddddd;
+    --background-color: #000029;
+    --focus-color: #3498db;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* High contrast focus styles */
+*:focus {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--focus-color);
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Large, readable text */
+body {
+    font-size: 18px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+/* Buttons with good contrast */
+.btn {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+}
+
+/* File upload section */
+.file-upload-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+/* Extracted text display */
+.extracted-text {
+    float: left;
+    color: black;
+    border: none;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    min-height: 200px;
+    width: 50%;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    word-wrap: break-word;
+}
+
+.braille-text {
+    float: right;
+    background: black;
+    border: none;
+    color: white;
+    margin-top: 1rem;
+    min-height: 200px;
+    width: 50%;
+    word-wrap: break-word;
+}
+
+/* Loading indicator */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Voice control section */
+.voice-controls {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .btn {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}
+
+/* ARIA and screen reader utilities */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

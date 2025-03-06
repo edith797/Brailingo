@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="accessibility-tool">
+    <h1 class="text-center mb-4">Brailingo</h1>
+
+    <!-- Initial Welcome Message - Hidden but read by screen readers -->
+    <div id="welcomeMessage" class="visually-hidden" aria-live="polite">
+        Welcome to Brailingo. Please choose your preferred feedback method: Speech or Tactile.
+        For voice commands, say "use speech" or "use tactile" to make your selection.
+    </div>
+
+    <!-- Response Type Selection Section -->
+    <div id="responseTypeSection" class="response-type-section mb-4">
+        <h2 class="h4 mb-3 text-center">Choose Your Preferred Response Type</h2>
+        <div class="d-flex justify-content-center gap-3">
+            <button id="speechOption" class="btn btn-lg btn-primary response-type-btn" aria-label="Choose speech output">
+                <i data-feather="volume-2"></i> Speech Output
+            </button>
+            <button id="tactileOption" class="btn btn-lg btn-secondary response-type-btn" aria-label="Choose tactile feedback">
+                <i data-feather="smartphone"></i> Tactile Feedback
+            </button>
+        </div>
+    </div>
+
+    <!-- Voice Commands Section - Always Visible -->
+    <div class="voice-controls mb-4">
+        <button id="startVoice" class="btn btn-primary btn-lg" aria-label="Start voice commands">
+            <i data-feather="mic"></i> Start Voice Commands
+        </button>
+        <div id="voiceStatus" class="alert mt-2" role="status" style="display: none;"></div>
+    </div>
+
+    <!-- File Upload Section - Initially Hidden -->
+    <div class="file-upload-section" style="display: none;">
+        <form id="uploadForm" class="mb-4">
+            <div class="mb-3">
+                <label for="fileInput" class="form-label">Upload Document (PDF or Image)</label>
+                <input type="file" class="form-control form-control-lg" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" aria-describedby="fileHelp">
+                <div id="fileHelp" class="form-text">Supported formats: PDF, PNG, JPG</div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Process Document</button>
+        </form>
+    </div>
+
+    <!-- Output Section -->
+    <div class="output-section">
+        <div id="loadingIndicator" class="text-center" style="display: none;">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <div class="output-controls mb-3" style="display: none;">
+            <button id="playText" class="btn btn-primary" aria-label="Read text aloud">
+                <i data-feather="volume-2"></i> Read Aloud
+            </button>
+            <button id="pauseText" class="btn btn-secondary" aria-label="Pause reading">
+                <i data-feather="pause"></i> Pause
+            </button>
+            <button id="stopText" class="btn btn-danger" aria-label="Stop reading">
+                <i data-feather="square"></i> Stop
+            </button>
+        </div>
+
+        <!-- Text Output -->
+        <div id="extractedText" class="extracted-text p-3 border rounded mt-3" role="region" aria-label="Extracted text content">
+            <h3>Extracted Text</h3>
+            <div class="text-content"></div>
+        </div>
+
+        <!-- Braille Output -->
+        <div id="brailleText" class="braille-text p-3 border rounded mt-3" role="region" aria-label="Braille representation">
+            <h3>Braille Output</h3>
+            <div class="braille-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Voice Commands Help Modal -->
+<div class="modal fade" id="voiceCommandsHelp" tabindex="-1" aria-labelledby="voiceCommandsHelpLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="voiceCommandsHelpLabel">Available Voice Commands</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>"use speech" - Select speech feedback</li>
+                    <li>"use tactile" - Select tactile feedback</li>
+                    <li>"upload file" - Open file selector</li>
+                    <li>"process document" - Start processing</li>
+                    <li>"read text" - Read extracted text</li>
+                    <li>"stop reading" - Stop text-to-speech</li>
+                    <li>"show braille" - Show braille output</li>
+                    <li>"help" - Show this help menu</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
